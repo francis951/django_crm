@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load static %}
+<div class="">
+    
+    {% if user.is_authenticated %}
+        <h1>Record</h1>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Hey {{ user }}!</strong> You're welcome.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="mt-4 p-5 bg-secondary text-white rounded">
+        
+        <table class="table table-stripe text-white table-hover">
+            <thead>
+              <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th>City</th>
+                <th scope="col">State</th>
+                <th scope="col">ZipCode</th>
+                <th scope="col">Created_at</th>
+                <th scope="col">ID</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% if record %}
+
+                {% for records in record %}
+              <tr>
+                <td> {{ records.first_name }}</td>
+                <td>{{ records.last_name }}</td>
+                <td>{{ records.email }}</td>
+                <td>{{ records.phone }}</td>
+                <td>{{ records.address }}</td>
+                <td>{{ records.city}}</td>
+                <td>{{ records.state }}</td>
+                <td>{{ records.zipcode }}</td>
+                <td>{{ records.created_at }}</td>
+                <td><a href="{% url 'record' records.id %}">{{ records.id }}</a></td>
+            </tr>
+              {% endfor %}
+                
+              {% endif %}  
+            </tbody>
+          </table>
+        </div>
+            
+
+        {% else %}
+
+        <div class="card mb-6" style="max-width: 1000px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{% static '/images/recruit.jpg' %}" class="img-fluid rounded-start" alt="The crm image">
+              </div>
+              <div class="col-md-5 offset-md-3">
+                <div class="card-body">
+                  <h5 class="card-title">Login</h5>
+                  <p class="card-text">
+                    <form method="POST" action="{% url 'home' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="username" aria-describedby="emailHelp" required>
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-secondary">Login</button>
+                    </form>    
+                </p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+    {% endif %} 
+    
+</div>
+
+
+
+
+
+{% endblock content %}
